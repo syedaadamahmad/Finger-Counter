@@ -5,7 +5,7 @@ from typing import Optional
 
 def setup_page() -> None:
     st.set_page_config(
-        page_title="Deteksi Angka Jari AI",
+        page_title="AI Finger Number Detection",
         page_icon="✋",
         layout="wide",
         initial_sidebar_state="expanded"
@@ -147,30 +147,25 @@ def load_custom_css() -> None:
         </style>
     """, unsafe_allow_html=True)
 
-def render_sidebar(logo_path: str = os.path.join("Img", "Logo UKMIT.png")) -> None:
+def render_sidebar(logo_path: str = os.path.join("Img", "Ufirm-fabicon.png")) -> None:
     with st.sidebar:
-        # Logo Section
         if os.path.exists(logo_path):
-            # Use columns to center the image perfectly
             _, col2, _ = st.columns([1, 2, 1])
             with col2:
                 st.image(logo_path, use_container_width=True)
                 
-        # Brand Text
         st.markdown("""
-            <div class='sidebar-title'>UKM IT</div>
-            <div class='sidebar-subtitle'>Cipta Karya Informatika</div>
+            <div class='sidebar-title'>UFirm</div>
+            <div class='sidebar-subtitle'>Technologies</div>
         """, unsafe_allow_html=True)
         
         st.markdown("---")
         
-        # Controls Section
-        st.markdown("<h3 style='text-align: center;'>🎮 Panel Kontrol</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='text-align: center;'>Control Panel</h3>", unsafe_allow_html=True)
         
-        # Status Indicator (Top of controls)
         is_active = st.session_state.get('camera_active', False)
         status_color = "status-active" if is_active else "status-inactive"
-        status_text = "Kamera Aktif" if is_active else "Kamera Non-aktif"
+        status_text = "Camera Active" if is_active else "Camera Inactive"
         
         st.markdown(f"""
         <div class='status-badge'>
@@ -180,34 +175,32 @@ def render_sidebar(logo_path: str = os.path.join("Img", "Logo UKMIT.png")) -> No
         <br>
         """, unsafe_allow_html=True)
         
-        # Action Buttons
-        if st.button("📷 Mulai", type="primary", use_container_width=True):
+        if st.button("Start Video", type="primary", use_container_width=True):
             st.session_state.camera_active = True
             st.rerun()
             
-        if st.button("⏹️ Stop", use_container_width=True):
+        if st.button("Stop Video", use_container_width=True):
             st.session_state.camera_active = False
             st.rerun()
             
-        # Footer
         st.markdown("---")
         st.markdown(
             "<div style='text-align: center; color: #666; font-size: 0.8rem;'>"
-            "© 2025 UKM IT<br>All Rights Reserved"
+            "© 2025 UFirm Technologies<br>All Rights Reserved"
             "</div>", 
             unsafe_allow_html=True
         )
 
 def render_header() -> None:
-    st.markdown("<h2 class='main-header' style='padding-top: 0; margin-top: -40px;'>✋ AI Hand Detector</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 class='main-header' style='padding-top: 0; margin-top: -40px;'>✋ AI Finger Counter</h2>", unsafe_allow_html=True)
 
 def render_instructions() -> None:
     st.markdown("""
     <div style='text-align: center; padding: 2rem; background: rgba(255,255,255,0.03); border-radius: 20px; margin-top: 0;'>
-        <h2>Selamat Datang!</h2>
+        <h2>Welcome!</h2>
         <p style='font-size: 1.2rem; color: #aaa; margin-bottom: 2rem;'>
-            Program ini menggunakan Artificial Intelligence untuk mendeteksi jumlah jari<br>
-            dan akan diucapkan secara otomatis.
+            This program uses Artificial Intelligence to detect the number of fingers<br>
+            and will announce the result automatically.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -216,19 +209,18 @@ def render_result_panel(number: Optional[int], text: Optional[str]) -> None:
     if number is not None:
         st.markdown(f"""
         <div class='stCard'>
-            <div style='text-align: center; color: #888; margin-bottom: 10px;'>Terdeteksi</div>
+            <div style='text-align: center; color: #888; margin-bottom: 10px;'>Detected</div>
             <div class='number-display'>{number}</div>
             <div class='text-display'>"{text}"</div>
         </div>
         """, unsafe_allow_html=True)
         
-        # Visual bar indicator
         progress = number / 10.0
         st.progress(progress)
     else:
         st.markdown("""
         <div class='stCard' style='text-align: center; padding: 40px 20px;'>
             <div style='font-size: 3rem; margin-bottom: 1rem; opacity: 0.3;'>✋</div>
-            <div style='color: #666;'>Menunggu tangan...</div>
+            <div style='color: #666;'>Waiting for hand...</div>
         </div>
         """, unsafe_allow_html=True)

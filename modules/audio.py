@@ -6,8 +6,8 @@ from typing import Optional, Dict
 class AudioManager:
     def __init__(self):
         self.angka_teks: Dict[int, str] = {
-            0: "nol", 1: "satu", 2: "dua", 3: "tiga", 4: "empat",
-            5: "lima", 6: "enam", 7: "tujuh", 8: "delapan", 9: "sembilan", 10: "sepuluh"
+            0: "zero", 1: "one", 2: "two", 3: "three", 4: "four",
+            5: "five", 6: "six", 7: "seven", 8: "eight", 9: "nine", 10: "ten"
         }
         
         # Setup cache directory
@@ -21,12 +21,12 @@ class AudioManager:
     def get_audio_html(self, text: str) -> str:
         """Generate HTML audio tag with base64 encoded audio"""
         try:
-            filename = f"{text}.mp3"
+            filename = f"{text}_en.mp3"
             file_path = os.path.join(self.cache_dir, filename)
 
             # Generate audio if it doesn't exist
             if not os.path.exists(file_path):
-                tts = gTTS(text=text, lang='id')
+                tts = gTTS(text=text, lang='en', tld='com')
                 tts.save(file_path)
 
             # Read file and encode to base64
